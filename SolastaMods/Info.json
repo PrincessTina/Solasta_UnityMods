@@ -1,0 +1,10 @@
+﻿{
+  "Id": "SolastaMods",
+  "DisplayName": "Solasta Mods",
+  "Author": "PrincessTina",
+  "Version": "1.0.0",
+  "ManagerVersion": "0.27.10",
+  "AssemblyName": "SolastaMods.dll",
+  "EntryMethod": "SolastaMods.Main.Load",
+  "Repository": "https://github.com/PrincessTina/Solasta_UnityMods"
+}
