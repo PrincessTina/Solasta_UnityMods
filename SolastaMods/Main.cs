@@ -118,44 +118,49 @@ namespace SolastaMods
     [HarmonyPatch(typeof(GameFactionManager), nameof(GameFactionManager.ExecuteFactionOperation))]
     static class Patch_MaxFactionRelationship
     {
-        //static void Prefix(ref FactionDefinition.FactionOperation factionOperation, ref int value)
-        //{
-        //    factionOperation = FactionDefinition.FactionOperation.SetValue;
-        //    value = 100;
-        //}
+        static void Prefix(ref FactionDefinition.FactionOperation factionOperation, ref int value)
+        {
+            return; // remove this to turn on the code below
+
+            factionOperation = FactionDefinition.FactionOperation.SetValue;
+            value = 100;
+        }
     }
 
     /*
-     * This code allows to gain all achievements on game start, if call it from Main class, Load() method.
+     * This code allows to gain all achievements on game start, if turned on
      */
-    static class Hack_GainAllAchievements
+    [HarmonyPatch(typeof(MainMenuScreen), nameof(MainMenuScreen.Load))]
+    static class Patch_GainAllAchievements
     {
-        public static void Run()
+        static void Prefix()
         {
+            return; // remove this to turn on the code below
+
             // All achievement names were copied from GamingPlatformDefinitions class's const string properties
             string[] AllAchievements = new string[132]
             {
-                "ACH_IMMORTAL", "ACH_IRONMAN", "ACH_REVIVE", "ACH_CRITKILL", "ACH_RANGER", "ACH_ROGUE", "ACH_WIZARD", 
-                "ACH_PALADIN", "ACH_CLERIC", "ACH_FIGHTER", "ACH_ONEALIVE", "ACH_FRIENDLYFIRE", "ACH_ALMOSTDEAD", 
-                "ACH_PLAYERFALL", "ACH_REROLLSTATS", "ACH_CLASSICPARTY", "ACH_NOCASTERPARTY", "ACH_ARWIN", "ACH_LEGENDARYQUEST", 
-                "ACH_ROBAR", "ACH_LISBATH", "ACH_DALIAT", "ACH_BERYL", "ACH_PRINCIPALITY", "ACH_TOWER", "ACH_ARCANEUM", 
-                "ACH_CIRCLE", "ACH_ANTIQUARIAN", "ACH_SCAVENGERS", "ACH_KILLAKSHA", "ACH_KILLRAZVAN", "ACH_TALKAKSHA", 
-                "ACH_KILLMARDRACHT", "ACH_TALKMARDRACHT", "ACH_DEPUTY", "ACH_SENIORDEPUTY", "ACH_HENRIKDEAD", "ACH_CROWN", 
-                "ACH_SORAKREAL", "ACH_GEMNECRO", "ACH_GEMABJU", "ACH_GEMCONJU", "ACH_GEMEVO", "ACH_INQUISITOR", "ACH_AERELAI", 
-                "ACH_FINISHGAME", "ACH_MONSTERFALL", "ACH_OVERWATCH", "ACH_SUPEREFFECTIVE", "ACH_TAKECRIT", "ACH_WEALTHY", 
-                "ACH_IDENTIFY", "ACH_ATTUNED", "ACH_POISONKIT", "ACH_HERBORISTKIT", "ACH_ENCHANTMENTKIT", "ACH_SCROLLKIT", 
-                "ACH_BESTIARY", "ACH_ARISTOCRAT", "ACH_PHILOSOPHER", "ACH_LOWLIFE", "ACH_ACOLYTE", "ACH_SELLSWORD", 
-                "ACH_ACADEMIC", "ACH_LAWKEEPER", "ACH_SPY", "ACH_FIREKILL", "ACH_ICEKILL", "ACH_THUNDERKILL", 
-                "ACH_LIGHTNINGKILL", "ACH_NECROTICKILL", "ACH_RADIANTKILL", "ACH_BLUDGEONKILL", "ACH_SLASHKILL", 
-                "ACH_PIERCEKILL", "ACH_PSYCHICKILL", "ACH_POISONKILL", "ACH_FORCEKILL", "ACH_ACIDKILL", "ACH_CRIT", 
-                "ACH_CREATEDUNGEON", "ACH_PLAYDUNGEON", "ACH_BARBARIAN", "ACH_DRUID", "ACH_VALLEYSTART", "ACH_REDEEMEREND", 
-                "ACH_ORENETISEND", "ACH_FUSIONEND", "ACH_MARINEND", "ACH_ANFARELEND", "ACH_EMPTYEND", "ACH_FORGEEND", 
-                "ACH_KILLSITENERO", "ACH_FOUNDMARIN", "ACH_KILLMUMMY", "ACH_DESTROYCOMPLEX", "ACH_ROCKSCREAM", "ACH_WANDERER", 
-                "ACH_MULTIPLAYER", "ACH_MONK", "ACH_WARLOCK", "ACH_BARD", "ACH_DEMON", "ACH_PARDON", "ACH_CONDEMN", 
-                "ACH_HECTOR", "ACH_EXO", "ACH_TRAITOR", "ACH_WHITECITY", "ACH_TELESCOPE", "ACH_ISRID", "ACH_MARDUK", 
-                "ACH_SCEPTERGIANT", "ACH_SCEPTERELF", "ACH_SAVEMOTHER", "ACH_ASHDOWN", "ACH_BLUNT", "ACH_ESTORGATH", 
-                "ACH_FAKEELF", "ACH_GREYBEAR", "ACH_GILMAR", "ACH_GUARDIAN", "ACH_SAVEROYAL", "ACH_SESSROTH", 
-                "ACH_SACRIFICEPARTY", "ACH_SACRIFICENPC", "ACH_SOUTH", "ACH_CENTRAL", "ACH_WEST", "ACH_EAST", "ACH_NORTH", 
+                "ACH_IMMORTAL", "ACH_IRONMAN", "ACH_REVIVE", "ACH_CRITKILL", "ACH_RANGER", "ACH_ROGUE", "ACH_WIZARD",
+                "ACH_PALADIN", "ACH_CLERIC", "ACH_FIGHTER", "ACH_ONEALIVE", "ACH_FRIENDLYFIRE", "ACH_ALMOSTDEAD",
+                "ACH_PLAYERFALL", "ACH_REROLLSTATS", "ACH_CLASSICPARTY", "ACH_NOCASTERPARTY", "ACH_ARWIN", "ACH_LEGENDARYQUEST",
+                "ACH_ROBAR", "ACH_LISBATH", "ACH_DALIAT", "ACH_BERYL", "ACH_PRINCIPALITY", "ACH_TOWER", "ACH_ARCANEUM",
+                "ACH_CIRCLE", "ACH_ANTIQUARIAN", "ACH_SCAVENGERS", "ACH_KILLAKSHA", "ACH_KILLRAZVAN", "ACH_TALKAKSHA",
+                "ACH_KILLMARDRACHT", "ACH_TALKMARDRACHT", "ACH_DEPUTY", "ACH_SENIORDEPUTY", "ACH_HENRIKDEAD", "ACH_CROWN",
+                "ACH_SORAKREAL", "ACH_GEMNECRO", "ACH_GEMABJU", "ACH_GEMCONJU", "ACH_GEMEVO", "ACH_INQUISITOR", "ACH_AERELAI",
+                "ACH_FINISHGAME", "ACH_MONSTERFALL", "ACH_OVERWATCH", "ACH_SUPEREFFECTIVE", "ACH_TAKECRIT", "ACH_WEALTHY",
+                "ACH_IDENTIFY", "ACH_ATTUNED", "ACH_POISONKIT", "ACH_HERBORISTKIT", "ACH_ENCHANTMENTKIT", "ACH_SCROLLKIT",
+                "ACH_BESTIARY", "ACH_ARISTOCRAT", "ACH_PHILOSOPHER", "ACH_LOWLIFE", "ACH_ACOLYTE", "ACH_SELLSWORD",
+                "ACH_ACADEMIC", "ACH_LAWKEEPER", "ACH_SPY", "ACH_FIREKILL", "ACH_ICEKILL", "ACH_THUNDERKILL",
+                "ACH_LIGHTNINGKILL", "ACH_NECROTICKILL", "ACH_RADIANTKILL", "ACH_BLUDGEONKILL", "ACH_SLASHKILL",
+                "ACH_PIERCEKILL", "ACH_PSYCHICKILL", "ACH_POISONKILL", "ACH_FORCEKILL", "ACH_ACIDKILL", "ACH_CRIT",
+                "ACH_CREATEDUNGEON", "ACH_PLAYDUNGEON", "ACH_BARBARIAN", "ACH_DRUID", "ACH_VALLEYSTART", "ACH_REDEEMEREND",
+                "ACH_ORENETISEND", "ACH_FUSIONEND", "ACH_MARINEND", "ACH_ANFARELEND", "ACH_EMPTYEND", "ACH_FORGEEND",
+                "ACH_KILLSITENERO", "ACH_FOUNDMARIN", "ACH_KILLMUMMY", "ACH_DESTROYCOMPLEX", "ACH_ROCKSCREAM", "ACH_WANDERER",
+                "ACH_MULTIPLAYER", "ACH_MONK", "ACH_WARLOCK", "ACH_BARD", "ACH_DEMON", "ACH_PARDON", "ACH_CONDEMN",
+                "ACH_HECTOR", "ACH_EXO", "ACH_TRAITOR", "ACH_WHITECITY", "ACH_TELESCOPE", "ACH_ISRID", "ACH_MARDUK",
+                "ACH_SCEPTERGIANT", "ACH_SCEPTERELF", "ACH_SAVEMOTHER", "ACH_ASHDOWN", "ACH_BLUNT", "ACH_ESTORGATH",
+                "ACH_FAKEELF", "ACH_GREYBEAR", "ACH_GILMAR", "ACH_GUARDIAN", "ACH_SAVEROYAL", "ACH_SESSROTH",
+                "ACH_SACRIFICEPARTY", "ACH_SACRIFICENPC", "ACH_SOUTH", "ACH_CENTRAL", "ACH_WEST", "ACH_EAST", "ACH_NORTH",
                 "ACH_PARTY"
             };
 
